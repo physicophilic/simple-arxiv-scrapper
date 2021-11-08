@@ -88,7 +88,7 @@ def main():
             new_choice=input("Download Y/n?")
             print("\n")
             if new_choice=="Y" or new_choice=="y":
-                paper.download_pdf(filename=str(paper.title)+".pdf", dirpath="/home/manish/GoodNotes/Papers")
+                paper.download_pdf(filename=str(paper.title)+".pdf")
         else:
             print("Invalid input.")
 
