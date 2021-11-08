@@ -54,4 +54,4 @@ Download Y/n?
 
 ```
 
-Pressing Y/y will download the file to `$HOME/Downloads` by default. 
+Pressing Y/y will download the file to current directory by default. 
