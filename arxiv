@@ -1,0 +1,99 @@
+#!/bin/python3
+import sys
+import arxiv
+import re
+
+"""Algorithm
+0) Empty result array
+1) Get query.
+2) Add x things to result array
+3) Print result array
+4) User input - a,d,m,r,q
+    1) q = exit
+    2) r = go to 0)
+    3) m = Add x things to result array 
+        1) print result array
+        2) user input - a,d,m,r,q
+    4) a: get user input = #
+        1) check if # < result array size
+        2) if so, get abstract of it (print it), else go to 4.4
+        3) user input - a, d, m, r, q
+    5) d: get user input = #
+        1) check if # < result array size
+        2) if so, download it (open it using nohup) else go to 4.5
+        3) user input - a,d,m,r,q
+
+So that's it. But now coding this. 
+
+"""
+
+def search_results(que, max=10, sort=0):
+
+    if sort==0:
+        search = arxiv.Search(
+          query = que,
+          max_results = max,
+          sort_by = arxiv.SortCriterion.SubmittedDate
+        )
+    else:
+        search = arxiv.Search(
+          query = que,
+          max_results = max,
+          sort_by = arxiv.SortCriterion.Relevance
+        )
+
+
+    return search
+
+def main():
+    x = 0
+    dummy = sys.argv  #using argv
+    dummy.pop(0)  #first entry is program's name 
+    que=' '.join(dummy)
+    sort=1
+    while 1:
+        SNo = 0
+        ids = []
+        search = search_results(que, x+10, sort)
+        for result in search.results():
+            print(str(SNo) + ")",  result.title)
+            ids.append(result.entry_id)
+            SNo=SNo+1
+        print("\n")
+        choice=input("# (for abstract)|M(ore results)/F(lip sorting)/Q(uit) ")
+        if choice=="m" or choice=="M":
+            x = x+10
+        elif choice=="q" or choice=="Q":
+            exit()
+        elif choice == "f" or choice=="F":
+            if sort==0:
+                sort = 1
+            else:
+                sort = 0
+        elif type(int(choice)) == int:   # Very hacky way to take quick input.
+            ID = str(re.sub(r"http://arxiv.org/abs/", "", str(ids[int(choice)])))
+            paper = next(arxiv.Search(id_list=[ID]).results())
+            print('\n')
+            print("Title:" , paper.title)
+            print('\n')
+            print("Journal:" , paper.journal_ref)
+            print("Category:", paper.primary_category)
+            print("Last updated:", paper.updated)
+            print("Orig. published:", paper.published)
+            for author in paper.authors:
+                print(author)
+            print("\n")
+            print(paper.summary)
+            print("\n")
+            new_choice=input("Download Y/n?")
+            print("\n")
+            if new_choice=="Y" or new_choice=="y":
+                paper.download_pdf(filename=str(paper.title)+".pdf", dirpath="/home/manish/GoodNotes/Papers")
+        else:
+            print("Invalid input.")
+
+
+if __name__ == "__main__":
+    main()
+
+
