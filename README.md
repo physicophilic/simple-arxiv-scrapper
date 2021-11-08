@@ -26,8 +26,8 @@ arxiv quantum AND mechanics  # see arxiv API for keywords similar to AND
 
 The output by default is sorted by relevance. Here on 
 
-- M/m will give 10 more results
-- F will flip to top 10 chronological papers satisfying search query
+- `M/m` will give 10 more results
+- `F` will flip to top 10 chronological papers satisfying search query
 - `#` will give abstract, with author name, journal name, date - see next example
 
 ## Downloading
@@ -54,4 +54,10 @@ Download Y/n?
 
 ```
 
-Pressing Y/y will download the file to current directory by default. 
+Pressing `Y/y` will download the file to current directory (by default). 
+
+
+## Todo
+
+1. Make the downloading asynchronous
+2. Add easy way to customize the download directory
