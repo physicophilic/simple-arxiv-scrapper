@@ -28,7 +28,7 @@ The output by default is sorted by relevance. Here on
 
 - M/m will give 10 more results
 - F will flip to top 10 chronological papers satisfying search query
-- # will give abstract, with author name, journal name, date - see next example
+- `#` will give abstract, with author name, journal name, date - see next example
 
 ## Downloading
 
